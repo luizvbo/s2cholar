@@ -23,7 +23,7 @@ pip install git+https://github.com/GIT_USER_ID/GIT_REPO_ID.git
 
 Then import the package:
 ```python
-import s2cholar 
+import s2cholar
 ```
 
 ### Setuptools
@@ -53,12 +53,11 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = s2cholar.AuthorApi(s2cholar.ApiClient(configuration))
-author_id = 'author_id_example' # str | 
-fields = 'fields_example' # str | A comma-separated list of the fields to be returned.<br><br> The following case-sensitive author fields are recognized: <ul>     <li><code>authorId</code> - Always included</li>     <li><code>externalIds</code></li>     <li><code>url</code></li>     <li><code>name</code> - Included if no fields are specified</li>     <li><code>aliases</code></li>     <li><code>affiliations</code></li>     <li><code>homepage</code></li>     <li><code>papers</code></li>         <ul>             <li><code>paperId</code> - Always included</li>             <li><code>externalIds</code></li>             <li><code>url</code></li>             <li><code>title</code> - Included if no fields are specified</li>             <li><code>abstract</code></li>             <li><code>venue</code></li>             <li><code>year</code></li>             <li><code>referenceCount</code></li>             <li><code>citationCount</code></li>             <li><code>influentialCitationCount</code></li>             <li><code>isOpenAccess</code></li>             <li><code>fieldsOfStudy</code></li>             <li><code>authors</code>- Will include: <code>authorId</code> & <code>name</code></li>             <li>To get more detailed information about an author's papers, use the <code>/author/{author_id}/papers</code> endpoint</li>         </ul> </ul> <br><br> Examples: <ul>     <li><code>https://api.semanticscholar.org/graph/v1/author/1741101</code></li>     <ul>         <li>Returns the author's always included field of authorId plus the name.</li>     </ul>     <li><code>https://api.semanticscholar.org/graph/v1/author/1741101?fields=aliases,papers</code></li>     <ul>         <li>Returns the author's authorId, aliases, and list of papers.  </li>         <li>Each paper has its paperId plus its title.</li>     </ul>     <li><code>https://api.semanticscholar.org/graph/v1/author/1741101?fields=url,papers.abstract,papers.authors</code></li>     <ul>         <li>Returns the author's authorId, url, and list of papers.  </li>         <li>Each paper has its paperId, abstract, and list of authors.</li>         <li>In that list of authors, each author has their authorId and name.</li>     </ul> </ul> (optional)
+author_id = '145872832' # str
 
 try:
     # Details about an author
-    api_response = api_instance.get_graph_get_author(author_id, fields=fields)
+    api_response = api_instance.get_graph_get_author(author_id)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling AuthorApi->get_graph_get_author: %s\n" % e)
@@ -67,7 +66,7 @@ except ApiException as e:
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://localhost/graph/v1*
+All URIs are relative to *https://api.semanticscholar.org/graph/v1*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -111,4 +110,18 @@ Class | Method | HTTP request | Description
 ## Author
 
 
+## Contribution
 
+### Commit Messages
+
+- API: an (incompatible) API change
+- BENCH: changes to the benchmark suite
+- BUG: bug fix
+- DEP: deprecate something, or remove a deprecated object
+- DEV: development tool or utility
+- DOC: documentation
+- ENH: enhancement
+- MAINT: maintenance commit (refactoring, typos, etc.)
+- REV: revert an earlier commit
+- STY: style fix (whitespace, PEP8)
+- TST: addition or modification of tests
