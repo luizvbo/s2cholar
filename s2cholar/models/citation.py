@@ -15,6 +15,7 @@ import pprint
 import six
 
 from s2cholar.configuration import Configuration
+from s2cholar.models import CitationCitingPaper
 
 
 class Citation(object):
