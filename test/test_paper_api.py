@@ -10,6 +10,10 @@
 
 from __future__ import absolute_import
 
+import s2cholar
+from s2cholar.api.paper_api import PaperApi
+from s2cholar.rest import ApiException
+
 
 def test_get_paper(paper_api):
     """Test case for get_paper
