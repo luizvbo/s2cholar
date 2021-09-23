@@ -1,6 +1,6 @@
 # s2cholar
 
-Semantic Scholar API client for paper and author.
+Client for the new Semantic Scholar API.
 
 We used the [Swagger Codegen](https://github.com/swagger-api/swagger-codegen)
 project to generate the initial version of this package, which was then
@@ -12,6 +12,11 @@ Details of the Swagger Codegen used:
 - Package version: 0.1.0
 - Build package: io.swagger.codegen.languages.PythonClientCodegen
 
+## Announcement
+
+This project is **active** and **under development**. Everyone is more than
+welcome to help and contribute.
+
 ## Requirements.
 
 Python 2.7 and 3.4+
@@ -22,9 +27,9 @@ Python 2.7 and 3.4+
 If the python package is hosted on Github, you can install directly from Github
 
 ```sh
-pip install git+https://github.com/GIT_USER_ID/GIT_REPO_ID.git
+pip install git+https://github.com/luizvbo/s2cholar.git
 ```
-(you may need to run `pip` with root permission: `sudo pip install git+https://github.com/GIT_USER_ID/GIT_REPO_ID.git`)
+(you may need to run `pip` with root permission: `sudo pip install git+https://github.com/luizvbo/s2cholar.git`)
 
 Then import the package:
 ```python
