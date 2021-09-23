@@ -85,7 +85,26 @@ class PaperApi(object):
                     - influentialCitationCount
                     - isOpenAccess
                     - fieldsOfStudy
-                    - authors
+                    - authors.authorId
+                    - authors.externalIds
+                    - authors.url
+                    - authors.name
+                    - authors.aliases
+                    - authors.affiliations
+                    - authors.homepage
+                    - citations.paperId
+                    - citations.url
+                    - citations.title
+                    - citations.venue
+                    - citations.year
+                    - citations.authors
+                    - references.paperId
+                    - references.url
+                    - references.title
+                    - references.venue
+                    - references.year
+                    - references.authors
+                    - embedding'
 
         Returns:
             FullPaper: If the method is called asynchronously, returns the
@@ -95,7 +114,13 @@ class PaperApi(object):
             'paperId', 'externalIds', 'url', 'title', 'abstract', 'venue',
             'year', 'referenceCount', 'citationCount',
             'influentialCitationCount', 'isOpenAccess', 'fieldsOfStudy',
-            'authors'
+            'authors.authorId', 'authors.externalIds', 'authors.url',
+            'authors.name', 'authors.aliases', 'authors.affiliations',
+            'authors.homepage', 'citations.paperId', 'citations.url',
+            'citations.title', 'citations.venue', 'citations.year',
+            'citations.authors', 'references.paperId', 'references.url',
+            'references.title', 'references.venue', 'references.year',
+            'references.authors', 'embedding'
         }
         # Keep only fields not listed in `fields_to_exclude`
         fields = fields - set(fields_to_exclude)

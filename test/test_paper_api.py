@@ -26,10 +26,26 @@ def test_get_paper(paper_api):
         'is_open_access', 'paper_id', 'reference_count', 'references', 'title',
         'url', 'venue', 'year'
     ]
-    paper = paper_api.get_paper('17498e9bfa0dfd7c74600559e7e5440302b3f672')
+    expected_author_fields = [
+        'authorId', 'externalIds', 'url', 'name', 'aliases', 'affiliations',
+        'homepage'
+    ]
+    expected_paper_fields = [
+        'authors', 'paper_id', 'title', 'url', 'venue', 'year'
+    ]
+    expected_reference_fields = [
+        'paperId', 'url', 'title', 'venue', 'year', 'authors'
+    ]
+    paper = paper_api.get_paper('453a16fa8969e420d95e7d762030b4b933f47aec')
     assert paper[1] == 200
     for field in expected_fields:
         assert hasattr(paper[0], field)
+    for field in expected_author_fields:
+        assert field in paper[0].authors[0]
+    for field in expected_paper_fields:
+        assert hasattr(paper[0].citations[0], field)
+    for field in expected_reference_fields:
+        assert field in paper[0].references[0]
 
 
 def test_get_authors(paper_api):
@@ -43,7 +59,7 @@ def test_get_authors(paper_api):
         'homepage', 'papers'
     ]
     authors = paper_api.get_paper_authors(
-        '17498e9bfa0dfd7c74600559e7e5440302b3f672'
+        '453a16fa8969e420d95e7d762030b4b933f47aec'
     )
     assert authors[1] == 200
     for field in expected_fields:
