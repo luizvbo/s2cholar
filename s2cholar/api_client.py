@@ -194,13 +194,14 @@ class ApiClient(object):
     def sanitize_for_serialization(self, obj):
         """Builds a JSON POST object.
 
-        If obj is None, return None.
-        If obj is str, int, long, float, bool, return directly.
-        If obj is datetime.datetime, datetime.date
+        The return type depends on the nature of the input:
+        - If obj is None, return None.
+        - If obj is str, int, long, float, bool, return directly.
+        - If obj is datetime.datetime, datetime.date
             convert to string in iso8601 format.
-        If obj is list, sanitize each element in the list.
-        If obj is dict, return the dict.
-        If obj is swagger model, return the properties dict.
+        - If obj is list, sanitize each element in the list.
+        - If obj is dict, return the dict.
+        - If obj is swagger model, return the properties dict.
 
         Args:
             obj: The data to serialize.
@@ -239,13 +240,13 @@ class ApiClient(object):
     def deserialize(self, response, response_type):
         """Deserializes response into an object.
 
-        Params:
+        Args:
             response: RESTResponse object to be deserialized.
-            response_type: class literal for
-            deserialized object, or string of class name.
+            response_type: class literal for deserialized object, or string of
+                class name.
 
         Returns:
-            deserialized object.
+            Deserialized object.
         """
         # handle file downloading
         # save response body into a tmp file and return the instance
@@ -263,12 +264,12 @@ class ApiClient(object):
     def __deserialize(self, data, klass):
         """Deserializes dict, list, str into an object.
 
-        Params:
+        Args:
             data: dict, list or str.
             klass: class literal, or string of class name.
 
         Returns:
-            object.
+            Object: The deserialized object.
         """
         if data is None:
             return None
@@ -311,7 +312,7 @@ class ApiClient(object):
 
         To make an async request, set the async_req parameter.
 
-        Params:
+        Args:
             resource_path: Path to method endpoint.
             method: Method to call.
             path_params: Path parameters in the url.
@@ -338,11 +339,10 @@ class ApiClient(object):
                                      timeout. It can also be a pair (tuple) of
                                      (connection, read) timeouts.
         Returns:
-            If async_req parameter is True,
-            the request will be called asynchronously.
-            The method will return the request thread.
-            If parameter async_req is False or missing,
-            then the method will return the response directly.
+            If async_req parameter is True, the request will be called
+                asynchronously. The method will return the request thread. If
+                parameter async_req is False or missing, then the method will
+                return the response directly.
         """
         if not async_req:
             return self.__call_api(resource_path, method,
@@ -426,7 +426,7 @@ class ApiClient(object):
     def parameters_to_tuples(self, params, collection_formats):
         """Get parameters as list of tuples, formatting collections.
 
-        Params:
+        Args:
             params: Parameters as dict or list of two-tuples
             dict collection_formats: Parameter collection formats
 
@@ -461,7 +461,7 @@ class ApiClient(object):
     def prepare_post_parameters(self, post_params=None, files=None):
         """Builds form parameters.
 
-        Params:
+        Args:
             post_params: Normal form parameters.
             files: File parameters.
         Returns:
@@ -491,7 +491,7 @@ class ApiClient(object):
     def select_header_accept(self, accepts):
         """Returns `Accept` based on an array of accepts provided.
 
-        Params:
+        Args:
             accepts: List of headers.
 
         Returns:
@@ -510,7 +510,7 @@ class ApiClient(object):
     def select_header_content_type(self, content_types):
         """Returns `Content-Type` based on an array of content_types provided.
 
-        Params:
+        Args:
             content_types: List of content-types.
 
         Returns:
@@ -529,7 +529,7 @@ class ApiClient(object):
     def update_params_for_auth(self, headers, querys, auth_settings):
         """Updates header and query params based on authentication setting.
 
-        Params:
+        Args:
             headers: Header parameters dict to be updated.
             querys: Query parameters tuple list to be updated.
             auth_settings: Authentication setting identifiers list.
@@ -557,11 +557,11 @@ class ApiClient(object):
         Saves response body into a file in a temporary folder,
         using the filename from the `Content-Disposition` header if provided.
 
-        Params:
+        Args:
             response:  RESTResponse.
 
         Returns:
-            file path.
+            str: file path.
         """
         fd, path = tempfile.mkstemp(dir=self.configuration.temp_folder_path)
         os.close(fd)
@@ -581,7 +581,7 @@ class ApiClient(object):
     def __deserialize_primitive(self, data, klass):
         """Deserializes string to primitive type.
 
-        Params:
+        Args:
             data: str.
             klass: class literal.
 
@@ -605,7 +605,7 @@ class ApiClient(object):
     def __deserialize_date(self, string):
         """Deserializes string to date.
 
-        Params:
+        Args:
             string: str.
 
         Returns:
@@ -627,7 +627,7 @@ class ApiClient(object):
 
         The string should be in iso8601 datetime format.
 
-        Params:
+        Args:
             string: str.
 
         Returns:
@@ -653,7 +653,7 @@ class ApiClient(object):
     def __deserialize_model(self, data, klass):
         """Deserializes list or dict to model.
 
-        Params:
+        Args:
             data: dict, list.
             klass: class literal.
 
