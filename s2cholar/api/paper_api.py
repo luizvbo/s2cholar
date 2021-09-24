@@ -238,7 +238,7 @@ class PaperApi(object):
             'papers.influentialCitationCount', 'papers.isOpenAccess',
             'papers.fieldsOfStudy', 'papers.authors'
         }
-                # Keep only fields not listed in `fields_to_exclude`
+        # Keep only fields not listed in `fields_to_exclude`
         fields = fields - set(fields_to_exclude)
 
         collection_formats = {}
@@ -289,8 +289,9 @@ class PaperApi(object):
     ):
         """Details about a paper's citations
 
-        Fetch details about the papers the cite this paper (i.e. papers in whose bibliography this paper appears)
-        This method makes a synchronous HTTP request by default. To make an
+        Fetch details about the papers the cite this paper (i.e. papers in
+        whose bibliography this paper appears) This method makes a synchronous
+        HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
         >>> thread = api.get_paper_citations(paper_id, async_req=True)
         >>> result = thread.get()
@@ -342,16 +343,14 @@ class PaperApi(object):
             CitationBatch: If the method is called asynchronously, returns the
                 request thread.
         """
-        fields = [
+        fields = {
             'contexts', 'intents', 'isInfluential', 'paperId', 'externalIds',
             'url', 'title', 'abstract', 'venue', 'year', 'referenceCount',
             'citationCount', 'influentialCitationCount', 'isOpenAccess',
             'fieldsOfStudy', 'authors'
-        ]
+        }
         # Keep only fields not listed in `fields_to_exclude`
-        fields = [
-            field for field in fields if field not in set(fields_to_exclude)
-        ]
+        fields = fields - set(fields_to_exclude)
 
         collection_formats = {}
 
@@ -374,8 +373,9 @@ class PaperApi(object):
             ['application/json'])
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(
-            ['application/json'])
+        header_params['Content-Type'] = (
+            self.api_client.select_header_content_type(['application/json'])
+        )
 
         # Authentication setting
         auth_settings = []
@@ -394,15 +394,22 @@ class PaperApi(object):
             _return_http_data_only=return_http_data_only,
             _preload_content=preload_content,
             _request_timeout=request_timeout,
-            collection_formats=collection_formats)
+            collection_formats=collection_formats
+        )
 
-    def get_graph_get_paper_references(self, paper_id, **kwargs):
+    def get_paper_references(
+        self, paper_id: str = "", fields_to_exclude: List[str] = [],
+        offset: int = 0, limit: int = 100, async_req: bool = False,
+        return_http_data_only: bool = False, preload_content: bool = True,
+        request_timeout: Tuple[None, int, Tuple[int, int]] = None
+    ):
         """Details about a paper's references
 
-        Fetch details about the papers cited by this paper (i.e. appearing in this paper's bibliography)
+        Fetch details about the papers cited by this paper (i.e. appearing in
+        this paper's bibliography).
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_graph_get_paper_references(paper_id, async_req=True)
+        >>> thread = api.get_paper_references(paper_id, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -428,87 +435,47 @@ class PaperApi(object):
                 - [aclweb.org](aclweb.org)
                 - [acm.org](acm.org)
                 - [biorxiv.org](biorxiv.org)
+            fields_to_exclude (List[str]): By default, this function returns
+                all fields available. In case you want to exclude some of these
+                fields, you should pass as a list of strings. The fields are:
+                    - contexts
+                    - intents
+                    - isInfluential
+                    - paperId
+                    - externalIds
+                    - url
+                    - title
+                    - abstract
+                    - venue
+                    - year
+                    - referenceCount
+                    - citationCount
+                    - influentialCitationCount
+                    - isOpenAccess
+                    - fieldsOfStudy
+                    - authors
         :return: ReferenceBatch
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.get_graph_get_paper_references_with_http_info(paper_id, **kwargs)
-        else:
-            (data) = self.get_graph_get_paper_references_with_http_info(paper_id, **kwargs)
-            return data
-
-    def get_graph_get_paper_references_with_http_info(self, paper_id, **kwargs):
-        """Details about a paper's references
-
-        Fetch details about the papers cited by this paper (i.e. appearing in this paper's bibliography)
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_graph_get_paper_references_with_http_info(paper_id, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool
-        Args:
-            paper_id (str): The following types of IDs are supported:
-                - `<sha>` - a Semantic Scholar ID, e.g.
-                  `649def34f8be52c8b66281af98ae884c09aef38b`
-                - `CorpusId:<id>` - Semantic Scholar numerical ID, e.g.
-                  `215416146`
-                - `DOI:<doi>` - a Digital Object Identifier, e.g.
-                  `DOI:10.18653/v1/N18-3011`
-                - `ARXIV:<id>` - arXiv.rg, e.g. `ARXIV:2106.15928`
-                - `MAG:<id>` - Microsoft Academic Graph, e.g. `MAG:112218234`
-                - `ACL:<id>` - Association for Computational Linguistics, e.g.
-                  `ACL:W12-3903`
-                - `PMID:<id>` - PubMed/Medline, e.g. `PMID:19872477`
-                - `PMCID:<id>` - PubMed Central, e.g. `PMCID:2323736`
-                - `URL:<url>` - URL from one of the sites listed below, e.g.
-                  `URL:https://arxiv.org/abs/2106.15928v1` URLs are recognized
-                  from the following sites:
-                - [semanticscholar.org](semanticscholar.org)
-                - [arxiv.org](arxiv.org)
-                - [aclweb.org](aclweb.org)
-                - [acm.org](acm.org)
-                - [biorxiv.org](biorxiv.org)
-        :return: ReferenceBatch
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-
-        all_params = ['paper_id', 'offset', 'limit', 'fields']
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
-
-        params = locals()
-        for key, val in six.iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_graph_get_paper_references" % key
-                )
-            params[key] = val
-        del params['kwargs']
-        # verify the required parameter 'paper_id' is set
-        if self.api_client.client_side_validation and ('paper_id' not in params or
-                                                       params['paper_id'] is None):
-            raise ValueError("Missing the required parameter `paper_id` when calling `get_graph_get_paper_references`")
+        fields = {
+            'contexts', 'intents', 'isInfluential', 'paperId', 'externalIds',
+            'url', 'title', 'abstract', 'venue', 'year', 'referenceCount',
+            'citationCount', 'influentialCitationCount', 'isOpenAccess',
+            'fieldsOfStudy', 'authors'
+        }
+        # Keep only fields not listed in `fields_to_exclude`
+        fields = fields - set(fields_to_exclude)
 
         collection_formats = {}
 
-        path_params = {}
-        if 'paper_id' in params:
-            path_params['paper_id'] = params['paper_id']
+        path_params = {'paper_id': paper_id}
 
-        query_params = []
-        if 'offset' in params:
-            query_params.append(('offset', params['offset']))
-        if 'limit' in params:
-            query_params.append(('limit', params['limit']))
-        if 'fields' in params:
-            query_params.append(('fields', params['fields']))
+        query_params = [
+            ('fields', ','.join(fields)),
+            ('offset', offset),
+            ('limit', limit)
+        ]
 
         header_params = {}
 
@@ -521,8 +488,9 @@ class PaperApi(object):
             ['application/json'])
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(
-            ['application/json'])
+        header_params['Content-Type'] = (
+            self.api_client.select_header_content_type(['application/json'])
+        )
 
         # Authentication setting
         auth_settings = []
@@ -537,11 +505,12 @@ class PaperApi(object):
             files=local_var_files,
             response_type='ReferenceBatch',
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=async_req,
+            _return_http_data_only=return_http_data_only,
+            _preload_content=preload_content,
+            _request_timeout=request_timeout,
+            collection_formats=collection_formats
+        )
 
     def get_graph_get_paper_search(self, query, **kwargs):
         """Search for papers by keyword
