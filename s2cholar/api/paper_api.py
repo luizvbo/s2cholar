@@ -85,7 +85,26 @@ class PaperApi(object):
                     - influentialCitationCount
                     - isOpenAccess
                     - fieldsOfStudy
-                    - authors
+                    - authors.authorId
+                    - authors.externalIds
+                    - authors.url
+                    - authors.name
+                    - authors.aliases
+                    - authors.affiliations
+                    - authors.homepage
+                    - citations.paperId
+                    - citations.url
+                    - citations.title
+                    - citations.venue
+                    - citations.year
+                    - citations.authors
+                    - references.paperId
+                    - references.url
+                    - references.title
+                    - references.venue
+                    - references.year
+                    - references.authors
+                    - embedding'
 
         Returns:
             FullPaper: If the method is called asynchronously, returns the
@@ -95,7 +114,13 @@ class PaperApi(object):
             'paperId', 'externalIds', 'url', 'title', 'abstract', 'venue',
             'year', 'referenceCount', 'citationCount',
             'influentialCitationCount', 'isOpenAccess', 'fieldsOfStudy',
-            'authors'
+            'authors.authorId', 'authors.externalIds', 'authors.url',
+            'authors.name', 'authors.aliases', 'authors.affiliations',
+            'authors.homepage', 'citations.paperId', 'citations.url',
+            'citations.title', 'citations.venue', 'citations.year',
+            'citations.authors', 'references.paperId', 'references.url',
+            'references.title', 'references.venue', 'references.year',
+            'references.authors', 'embedding'
         }
         # Keep only fields not listed in `fields_to_exclude`
         fields = fields - set(fields_to_exclude)
@@ -176,6 +201,30 @@ class PaperApi(object):
                 - [aclweb.org](aclweb.org)
                 - [acm.org](acm.org)
                 - [biorxiv.org](biorxiv.org)
+            fields_to_exclude (List[str]): By default, this function returns
+                all fields available. In case you want to exclude some of these
+                fields, you should pass as a list of strings. The fields are:
+                    - authorId
+                    - externalIds
+                    - url
+                    - name
+                    - aliases
+                    - affiliations
+                    - homepage
+                    - papers.paperId
+                    - papers.externalIds
+                    - papers.url
+                    - papers.title
+                    - papers.abstract
+                    - papers.venue
+                    - papers.year
+                    - papers.referenceCount
+                    - papers.citationCount
+                    - papers.influentialCitationCount
+                    - papers.isOpenAccess
+                    - papers.fieldsOfStudy
+                    - papers.authors'
+
         Returns:
             AuthorBatch: If the method is called asynchronously, returns the
                 request thread.
