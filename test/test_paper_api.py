@@ -6,15 +6,6 @@
     Fetch paper and author data from the Semantic Scholar corpus
 
 """
-
-
-from __future__ import absolute_import
-
-import s2cholar
-from s2cholar.api.paper_api import PaperApi
-from s2cholar.rest import ApiException
-
-
 def test_get_paper(paper_api):
     """Test case for get_paper
 
@@ -48,12 +39,12 @@ def test_get_paper(paper_api):
         assert field in paper[0].references[0]
 
 
-def test_get_authors(paper_api):
+def test_get_paper_authors(paper_api):
     """Test case for get_graph_get_paper_authors
 
     Details about a paper's authors
     """
-    expected_fields = ['data', 'discriminator', 'next', 'offset']
+    expected_fields = ['data', 'next', 'offset']
     expected_data_fields = [
         'authorId', 'externalIds', 'url', 'name', 'aliases', 'affiliations',
         'homepage', 'papers'
@@ -68,12 +59,24 @@ def test_get_authors(paper_api):
         assert field in authors[0].data[0]
 
 
-def test_get_graph_get_paper_citations():
+def test_get_paper_citations(paper_api):
     """Test case for get_graph_get_paper_citations
 
     Details about a paper's citations
     """
-    pass
+    expected_fields = ['data', 'next', 'offset']
+    expected_data_fields = [
+        'intents', 'isInfluential', 'contexts', 'citingPaper'
+    ]
+    citations = paper_api.get_paper_citations(
+        '453a16fa8969e420d95e7d762030b4b933f47aec'
+    )
+    assert citations[1] == 200
+    for field in expected_fields:
+        assert hasattr(citations[0], field)
+    for field in expected_data_fields:
+        assert field in citations[0].data[0]
+
 
 def test_get_graph_get_paper_references():
     """Test case for get_graph_get_paper_references
