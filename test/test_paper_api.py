@@ -6,6 +6,8 @@
     Fetch paper and author data from the Semantic Scholar corpus
 
 """
+PAPER_ID = '453a16fa8969e420d95e7d762030b4b933f47aec'
+
 def test_get_paper(paper_api):
     """Test case for get_paper
 
@@ -27,7 +29,7 @@ def test_get_paper(paper_api):
     expected_reference_fields = [
         'paperId', 'url', 'title', 'venue', 'year', 'authors'
     ]
-    paper = paper_api.get_paper('453a16fa8969e420d95e7d762030b4b933f47aec')
+    paper = paper_api.get_paper(PAPER_ID)
     assert paper[1] == 200
     for field in expected_fields:
         assert hasattr(paper[0], field)
@@ -40,7 +42,7 @@ def test_get_paper(paper_api):
 
 
 def test_get_paper_authors(paper_api):
-    """Test case for get_graph_get_paper_authors
+    """Test case for get_paper_authors
 
     Details about a paper's authors
     """
@@ -49,9 +51,7 @@ def test_get_paper_authors(paper_api):
         'authorId', 'externalIds', 'url', 'name', 'aliases', 'affiliations',
         'homepage', 'papers'
     ]
-    authors = paper_api.get_paper_authors(
-        '453a16fa8969e420d95e7d762030b4b933f47aec'
-    )
+    authors = paper_api.get_paper_authors(PAPER_ID)
     assert authors[1] == 200
     for field in expected_fields:
         assert hasattr(authors[0], field)
@@ -60,7 +60,7 @@ def test_get_paper_authors(paper_api):
 
 
 def test_get_paper_citations(paper_api):
-    """Test case for get_graph_get_paper_citations
+    """Test case for get_paper_citations
 
     Details about a paper's citations
     """
@@ -68,9 +68,7 @@ def test_get_paper_citations(paper_api):
     expected_data_fields = [
         'intents', 'isInfluential', 'contexts', 'citingPaper'
     ]
-    citations = paper_api.get_paper_citations(
-        '453a16fa8969e420d95e7d762030b4b933f47aec'
-    )
+    citations = paper_api.get_paper_citations(PAPER_ID)
     assert citations[1] == 200
     for field in expected_fields:
         assert hasattr(citations[0], field)
@@ -78,16 +76,37 @@ def test_get_paper_citations(paper_api):
         assert field in citations[0].data[0]
 
 
-def test_get_graph_get_paper_references():
-    """Test case for get_graph_get_paper_references
+def test_get_paper_references(paper_api):
+    """Test case for get_paper_references
 
     Details about a paper's references
     """
-    pass
+    expected_fields = ['data', 'next', 'offset']
+    expected_data_fields = [
+        'intents', 'isInfluential', 'contexts', 'citedPaper'
+    ]
+    references = paper_api.get_paper_references(PAPER_ID)
+    assert references[1] == 200
+    for field in expected_fields:
+        assert hasattr(references[0], field)
+    for field in expected_data_fields:
+        assert field in references[0].data[0]
 
-def test_get_graph_get_paper_search():
-    """Test case for get_graph_get_paper_search
+
+def test_get_paper_search(paper_api):
+    """Test case for get_paper_search
 
     Search for papers by keyword
     """
-    pass
+    expected_fields = ['data', 'next', 'offset']
+    expected_data_fields = [
+        'paperId', 'externalIds', 'url', 'title', 'abstract', 'venue', 'year',
+        'referenceCount', 'citationCount', 'influentialCitationCount',
+        'isOpenAccess', 'fieldsOfStudy', 'authors'
+    ]
+    papers = paper_api.get_paper_search('weasul')
+    assert papers[1] == 200
+    for field in expected_fields:
+        assert hasattr(papers[0], field)
+    for field in expected_data_fields:
+        assert field in papers[0].data[0]
