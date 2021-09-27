@@ -105,9 +105,6 @@ class ReferenceBatch(object):
         :param next: The next of this ReferenceBatch.  # noqa: E501
         :type: int
         """
-        if self._configuration.client_side_validation and next is None:
-            raise ValueError("Invalid value for `next`, must not be `None`")  # noqa: E501
-
         self._next = next
 
     @property

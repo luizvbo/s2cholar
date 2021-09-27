@@ -296,7 +296,6 @@ class PaperApi(object):
         >>> thread = api.get_paper_citations(paper_id, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
         Args:
             paper_id (str): The following types of IDs are supported:
                 - `<sha>` - a Semantic Scholar ID, e.g.
@@ -412,7 +411,6 @@ class PaperApi(object):
         >>> thread = api.get_paper_references(paper_id, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
         Args:
             paper_id (str): The following types of IDs are supported:
                 - `<sha>` - a Semantic Scholar ID, e.g.
@@ -454,9 +452,13 @@ class PaperApi(object):
                     - isOpenAccess
                     - fieldsOfStudy
                     - authors
-        :return: ReferenceBatch
-                 If the method is called asynchronously,
-                 returns the request thread.
+            offset (int): When returning a list of results, start with the
+                element at this position in the list.
+            limit (int): The maximum number of results to return.
+
+        Returns:
+            ReferenceBatch: If the method is called asynchronously, returns the
+                request thread.
         """
         fields = {
             'contexts', 'intents', 'isInfluential', 'paperId', 'externalIds',
@@ -494,6 +496,7 @@ class PaperApi(object):
 
         # Authentication setting
         auth_settings = []
+        print(query_params)
 
         return self.api_client.call_api(
             '/paper/{paper_id}/references', 'GET',
@@ -512,28 +515,12 @@ class PaperApi(object):
             collection_formats=collection_formats
         )
 
-    def get_graph_get_paper_search(self, query, **kwargs):
-        """Search for papers by keyword
-
-        This method makes a synchronous HTTP request by default. To make an
-        asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.get_graph_get_paper_search(query, async_req=True)
-        >>> result = thread.get()
-
-        :param async_req bool
-        :param str query: Search query string.  We support boolean operators OR and AND.   If you would like to ensure the inclusion of particular search terms using a MUST operator,  simply include a plus sign before the term that must be included.  For example, searching +Epidemic +Modeling +Canada will ensure each term is included in the results.  Similarly, if you'd like to ensure the exclusion of a particular search term using a MUST NOT operator, simply include a minus sign before the term that must be excluded.  For example, searching +Epidemic +Modeling +Canada -COVID will ensure each term is included in the search results but will exclude content with the negated term.  Semantic Scholar search API does not currently support wildcards. If this is a feature you would like, please let us know. (required)
-        :return: PaperSearchBatch
-                 If the method is called asynchronously,
-                 returns the request thread.
-        """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
-            return self.get_graph_get_paper_search_with_http_info(query, **kwargs)
-        else:
-            (data) = self.get_graph_get_paper_search_with_http_info(query, **kwargs)
-            return data
-
-    def get_graph_get_paper_search_with_http_info(self, query, **kwargs):
+    def get_paper_search(
+        self, query: str = "", fields_to_exclude: List[str] = [],
+        offset: int = 0, limit: int = 100, async_req: bool = False,
+        return_http_data_only: bool = False, preload_content: bool = True,
+        request_timeout: Tuple[None, int, Tuple[int, int]] = None
+    ):
         """Search for papers by keyword
 
         This method makes a synchronous HTTP request by default. To make an
@@ -541,48 +528,61 @@ class PaperApi(object):
         >>> thread = api.get_graph_get_paper_search_with_http_info(query, async_req=True)
         >>> result = thread.get()
 
-        :param async_req bool
-        :param str query: Search query string.  We support boolean operators OR and AND.   If you would like to ensure the inclusion of particular search terms using a MUST operator,  simply include a plus sign before the term that must be included.  For example, searching +Epidemic +Modeling +Canada will ensure each term is included in the results.  Similarly, if you'd like to ensure the exclusion of a particular search term using a MUST NOT operator, simply include a minus sign before the term that must be excluded.  For example, searching +Epidemic +Modeling +Canada -COVID will ensure each term is included in the search results but will exclude content with the negated term.  Semantic Scholar search API does not currently support wildcards. If this is a feature you would like, please let us know. (required)
-        :param int offset: When returning a list of results, start with the element at this position in the list.
-        :param int limit: The maximum number of results to return.
-        :return: PaperSearchBatch
-                 If the method is called asynchronously,
-                 returns the request thread.
+        Params:
+            query (str): Search query string. We support boolean operators OR
+                and AND. If you would like to ensure the inclusion of
+                particular search terms using a MUST operator, simply include a
+                plus sign before the term that must be included. For example,
+                searching "+Epidemic +Modeling +Canada" will ensure each term
+                is included in the results. Similarly, if you'd like to ensure
+                the exclusion of a particular search term using a MUST NOT
+                operator, simply include a minus sign before the term that must
+                be excluded. For example, searching "+Epidemic +Modeling
+                +Canada -COVID" will ensure each term is included in the search
+                results but will exclude content with the negated term.
+                Semantic Scholar search API does not currently support
+                wildcards. If this is a feature you would like, please let us
+                know.
+            fields_to_exclude (List[str]): By default, this function returns
+                all fields available. In case you want to exclude some of these
+                fields, you should pass as a list of strings. The fields are:
+                    - paperid
+                    - externalids
+                    - url
+                    - title
+                    - abstract
+                    - venue
+                    - year
+                    - referencecount
+                    - citationcount
+                    - influentialcitationcount
+                    - isopenaccess
+                    - fieldsofstudy
+                    - authors
+
+        Returns:
+            PaperSearchBatch: If the method is called asynchronously, returns
+                the request thread.
         """
-
-        all_params = ['query', 'offset', 'limit', 'fields']
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
-
-        params = locals()
-        for key, val in six.iteritems(params['kwargs']):
-            if key not in all_params:
-                raise TypeError(
-                    "Got an unexpected keyword argument '%s'"
-                    " to method get_graph_get_paper_search" % key
-                )
-            params[key] = val
-        del params['kwargs']
-        # verify the required parameter 'query' is set
-        if self.api_client.client_side_validation and ('query' not in params or
-                                                       params['query'] is None):
-            raise ValueError("Missing the required parameter `query` when calling `get_graph_get_paper_search`")
+        fields = {
+            'paperId', 'externalIds', 'url', 'title', 'abstract', 'venue',
+            'year', 'referenceCount', 'citationCount', 'authors',
+            'influentialCitationCount', 'isOpenAccess', 'fieldsOfStudy'
+        }
+        # Keep only fields not listed in `fields_to_exclude`
+        fields = fields - set(fields_to_exclude)
 
         collection_formats = {}
 
         path_params = {}
 
         query_params = []
-        if 'offset' in params:
-            query_params.append(('offset', params['offset']))
-        if 'limit' in params:
-            query_params.append(('limit', params['limit']))
-        if 'fields' in params:
-            query_params.append(('fields', params['fields']))
-        if 'query' in params:
-            query_params.append(('query', params['query']))
+        query_params = [
+            ('query', query),
+            ('fields', ','.join(fields)),
+            ('offset', offset),
+            ('limit', limit)
+        ]
 
         header_params = {}
 
@@ -595,8 +595,9 @@ class PaperApi(object):
             ['application/json'])
 
         # HTTP header `Content-Type`
-        header_params['Content-Type'] = self.api_client.select_header_content_type(
-            ['application/json'])
+        header_params['Content-Type'] = (
+            self.api_client.select_header_content_type(['application/json'])
+        )
 
         # Authentication setting
         auth_settings = []
@@ -611,8 +612,9 @@ class PaperApi(object):
             files=local_var_files,
             response_type='PaperSearchBatch',
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=async_req,
+            _return_http_data_only=return_http_data_only,
+            _preload_content=preload_content,
+            _request_timeout=request_timeout,
+            collection_formats=collection_formats
+        )
