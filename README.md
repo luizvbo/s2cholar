@@ -82,11 +82,11 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *AuthorApi* | [**get_graph_get_author**](docs/AuthorApi.md#get_graph_get_author) | **GET** /author/{author_id} | Details about an author
 *AuthorApi* | [**get_graph_get_author_papers**](docs/AuthorApi.md#get_graph_get_author_papers) | **GET** /author/{author_id}/papers | Details about an author&#39;s papers
-*PaperApi* | [**get_graph_get_paper**](docs/PaperApi.md#get_graph_get_paper) | **GET** /paper/{paper_id} | Details about a paper
-*PaperApi* | [**get_graph_get_paper_authors**](docs/PaperApi.md#get_graph_get_paper_authors) | **GET** /paper/{paper_id}/authors | Details about a paper&#39;s authors
-*PaperApi* | [**get_graph_get_paper_citations**](docs/PaperApi.md#get_graph_get_paper_citations) | **GET** /paper/{paper_id}/citations | Details about a paper&#39;s citations
-*PaperApi* | [**get_graph_get_paper_references**](docs/PaperApi.md#get_graph_get_paper_references) | **GET** /paper/{paper_id}/references | Details about a paper&#39;s references
-*PaperApi* | [**get_graph_get_paper_search**](docs/PaperApi.md#get_graph_get_paper_search) | **GET** /paper/search | Search for papers by keyword
+*PaperApi* | [**get_paper**](docs/PaperApi.md#get_paper) | **GET** /paper/{paper_id} | Details about a paper
+*PaperApi* | [**get_paper_authors**](docs/PaperApi.md#get_paper_authors) | **GET** /paper/{paper_id}/authors | Details about a paper&#39;s authors
+*PaperApi* | [**get_paper_citations**](docs/PaperApi.md#get_paper_citations) | **GET** /paper/{paper_id}/citations | Details about a paper&#39;s citations
+*PaperApi* | [**get_paper_references**](docs/PaperApi.md#get_paper_references) | **GET** /paper/{paper_id}/references | Details about a paper&#39;s references
+*PaperApi* | [**get_paper_search**](docs/PaperApi.md#get_paper_search) | **GET** /paper/search | Search for papers by keyword
 
 
 ## Documentation For Models
@@ -133,6 +133,7 @@ In order to keep our git log clean, use the tags below in your commit messages
 - API: an (incompatible) API change
 - BENCH: changes to the benchmark suite
 - BUG: bug fix
+- CICD: changes to the CI/CD
 - DEP: deprecate something, or remove a deprecated object
 - DEV: development tool or utility
 - DOC: documentation
