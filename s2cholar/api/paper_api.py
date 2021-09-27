@@ -14,7 +14,6 @@
 from __future__ import absolute_import
 
 import re
-from typing import List, Tuple
 
 # python 2 and python 3 compatibility library
 import six
@@ -35,10 +34,10 @@ class PaperApi(object):
         self.api_client = api_client
 
     def get_paper(
-        self, paper_id: str = "", fields_to_exclude: List[str] = [],
-        async_req: bool = False, return_http_data_only: bool = False,
-        preload_content: bool = True,
-        request_timeout: Tuple[None, int, Tuple[int, int]] = None
+        self, paper_id="", fields_to_exclude=[],
+        async_req=False, return_http_data_only=False,
+        preload_content=True,
+        request_timeout=None
     ):
 
         """Details about a paper
@@ -166,10 +165,10 @@ class PaperApi(object):
         )
 
     def get_paper_authors(
-        self, paper_id, fields_to_exclude: List[str] = [],
-        async_req: bool = False, return_http_data_only: bool = False,
-        preload_content: bool = True,
-        request_timeout: Tuple[None, int, Tuple[int, int]] = None
+        self, paper_id, fields_to_exclude=[],
+        async_req=False, return_http_data_only=False,
+        preload_content=True,
+        request_timeout=None
     ):
         """Details about a paper's authors
 
@@ -282,10 +281,10 @@ class PaperApi(object):
         )
 
     def get_paper_citations(
-        self, paper_id: str = "", fields_to_exclude: List[str] = [],
-        offset: int = 0, limit: int = 100, async_req: bool = False,
-        return_http_data_only: bool = False, preload_content: bool = True,
-        request_timeout: Tuple[None, int, Tuple[int, int]] = None
+        self, paper_id="", fields_to_exclude=[],
+        offset=0, limit=100, async_req=False,
+        return_http_data_only=False, preload_content=True,
+        request_timeout=None
     ):
         """Details about a paper's citations
 
@@ -397,10 +396,10 @@ class PaperApi(object):
         )
 
     def get_paper_references(
-        self, paper_id: str = "", fields_to_exclude: List[str] = [],
-        offset: int = 0, limit: int = 100, async_req: bool = False,
-        return_http_data_only: bool = False, preload_content: bool = True,
-        request_timeout: Tuple[None, int, Tuple[int, int]] = None
+        self, paper_id="", fields_to_exclude=[],
+        offset=0, limit=100, async_req=False,
+        return_http_data_only=False, preload_content=True,
+        request_timeout=None
     ):
         """Details about a paper's references
 
@@ -516,10 +515,10 @@ class PaperApi(object):
         )
 
     def get_paper_search(
-        self, query: str = "", fields_to_exclude: List[str] = [],
-        offset: int = 0, limit: int = 100, async_req: bool = False,
-        return_http_data_only: bool = False, preload_content: bool = True,
-        request_timeout: Tuple[None, int, Tuple[int, int]] = None
+        self, query="", fields_to_exclude=[],
+        offset=0, limit=100, async_req=False,
+        return_http_data_only=False, preload_content=True,
+        request_timeout=None
     ):
         """Search for papers by keyword
 
