@@ -39,7 +39,6 @@ class PaperApi(object):
         preload_content=True,
         request_timeout=None
     ):
-
         """Details about a paper
 
         This method makes a synchronous HTTP request by default. To make an
