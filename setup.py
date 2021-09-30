@@ -28,6 +28,7 @@ REQUIRES = [
 setup(
     name=NAME,
     version=VERSION,
+    license="MIT license",
     description="Python API client for Semantic Scholar",
     author_email="luiz.vbo@gmail.com",
     author="Luiz Otavio Vilas Boas Oliveira",
@@ -35,6 +36,17 @@ setup(
     keywords=["Swagger", "Literature Graph Service"],
     install_requires=REQUIRES,
     packages=find_packages(),
+    classifiers=[
+        'Development Status :: 2 - Pre-Alpha',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Natural Language :: English',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 2.7',
+    ],
     include_package_data=True,
     long_description="""\
     Fetch paper and author data from the Semantic Scholar corpus
