@@ -1,32 +1,27 @@
 name: Tests
-on: [push]
+on:
+  - push
 
 jobs:
   build:
-    name: Run Python Tests
+    name: Run tox
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: [3.8, 3.7, 3.6, 2.7]
 
     steps:
 
-    - uses: actions/checkout@v2
-
-    - name: Setup timezone
-      uses: zcong1993/setup-timezone@master
-      with:
-        timezone: UTC
-
-    - name: Set up Python 3.x
+    - uses: actions/checkout@v1
+    - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
-        python-version: 3.x
+        python-version: ${{ matrix.python-version }}
 
-    - name: Install Python dependencies
+    - name: Install dependencies
       run: |
-        sudo apt install -y $(grep -o ^[^#][[:alnum:]-]* "packages.list")
-        python3 -m pip install --upgrade pip
-        pip3 install -r requirements.txt
-
-    - name: Test with pytest
-      run: |
-        pytest --exitfirst --verbose --failed-first \
-        --cov=. --cov-report html
+        python -m pip install --upgrade pip
+        pip install tox tox-gh-actions
+    - name: Test with tox
+      run: tox
