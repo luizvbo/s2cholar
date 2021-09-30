@@ -25,7 +25,7 @@ REQUIRES = [
 
 setup(
     name='s2cholar',
-    version='0.1.0',
+    version='0.1.1',
     keywords=['Swagger', 'Literature Graph Service'],
     install_requires=REQUIRES,
     packages=find_packages(),
