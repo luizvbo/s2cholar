@@ -9,8 +9,6 @@
 
 from setuptools import setup, find_packages  # noqa: H301
 
-NAME = "s2cholar"
-VERSION = "0.1.0"
 # To install the library, run the following
 #
 # python setup.py install
@@ -19,16 +17,16 @@ VERSION = "0.1.0"
 # http://pypi.python.org/pypi/setuptools
 
 REQUIRES = [
-    "certifi>=2017.4.17",
-    "python-dateutil>=2.1",
-    "six>=1.10",
-    "urllib3>=1.23"
+    'certifi>=2017.4.17',
+    'python-dateutil>=2.1',
+    'six>=1.10',
+    'urllib3>=1.23'
 ]
 
 setup(
-    name=NAME,
-    version=VERSION,
-    keywords=["Swagger", "Literature Graph Service"],
+    name='s2cholar',
+    version='0.0.0',
+    keywords=['Swagger', 'Literature Graph Service'],
     install_requires=REQUIRES,
     packages=find_packages(),
     include_package_data=True,

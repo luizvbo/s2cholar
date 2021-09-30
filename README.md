@@ -131,11 +131,9 @@ In order to keep our git log clean, use the tags below in your commit messages
 (adapted from the [numpy workflow](https://numpy.org/doc/1.14/dev/gitwash/development_workflow.html)):
 
 - API: an (incompatible) API change
-- BENCH: changes to the benchmark suite
 - BUG: bug fix
 - CICD: changes to the CI/CD
 - DEP: deprecate something, or remove a deprecated object
-- DEV: development tool or utility
 - DOC: documentation
 - ENH: enhancement
 - MAINT: maintenance commit (refactoring, typos, etc.)

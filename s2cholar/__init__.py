@@ -42,3 +42,5 @@ from s2cholar.models.paper_with_links import PaperWithLinks
 from s2cholar.models.reference import Reference
 from s2cholar.models.reference_batch import ReferenceBatch
 from s2cholar.models.reference_cited_paper import ReferenceCitedPaper
+
+__version__ = '0.0.0'
