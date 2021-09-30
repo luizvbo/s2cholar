@@ -6,15 +6,12 @@ jobs:
   build:
     name: Run tox
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         python-version: [3.8, 3.7, 3.6, 2.7]
 
     steps:
-
     - uses: actions/checkout@v1
-
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
